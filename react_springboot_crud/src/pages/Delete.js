@@ -24,38 +24,53 @@ class Delete extends Component {
       console.log(this.state);
     });
   }
+
+  delete() {
+    const { articleId, articleTitle, articleContent } = this.state;
+
+    let form = new FormData();
+    form.append("articleId", articleId);
+    form.append("articleTitle", articleTitle);
+    form.append("articleContent", articleContent);
+
+    axios
+      .post("deleteProcess.do", form)
+      .then((res) => {
+        alert("성공했다");
+        this.props.history.push("/Main");
+      })
+      .catch((err) => alert(err.response.data.msg));
+  }
   render() {
+    const { articleId, articleTitle, articleContent } = this.state;
+
     return (
       <>
         <h1>게시글 삭제</h1>
-        <form action="deleteProcess.do" method="post" id="deleteForm">
-          <input
-            type="hidden"
-            name="articleId"
-            defaultValue={this.state.articleId}
-          />
-          <h3>제목</h3>
-          <input
-            type="text"
-            name="articleTitle"
-            value={this.state.articleTitle}
-            readOnly
-          />
-          <br />
-          <h3>내용</h3>
-          <textarea
-            rows="10"
-            cols="20"
-            name="articleContent"
-            value={this.state.articleContent}
-            readOnly
-          ></textarea>
-          <br /> <br />
-          <button form="deleteForm">게시글 삭제</button>
-          <Link to="/">
-            <button type="button">취소</button>
-          </Link>
-        </form>
+        <input type="hidden" value={articleId} readOnly />
+        <h3>제목</h3>
+        <input
+          type="text"
+          value={articleTitle}
+          onChange={(event) =>
+            this.setState({ articleTitle: event.target.value })
+          }
+        />
+        <br />
+        <h3>내용</h3>
+        <textarea
+          rows="10"
+          cols="20"
+          value={articleContent}
+          onChange={(event) =>
+            this.setState({ articleContent: event.target.value })
+          }
+        ></textarea>
+        <br /> <br />
+        <button onClick={() => this.delete()}>게시글 삭제</button>
+        <Link to="/">
+          <button type="button">취소</button>
+        </Link>
       </>
     );
   }
