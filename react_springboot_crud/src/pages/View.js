@@ -21,7 +21,6 @@ class View extends Component {
         articleTitle: data.articleTitle,
         articleContent: data.articleContent,
       });
-      console.log(this.state);
     });
   }
 
