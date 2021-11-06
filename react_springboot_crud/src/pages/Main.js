@@ -10,7 +10,7 @@ const Main = () => {
       <Link to="/View">
         <button>최근 게시글 보기</button>
       </Link>
-      <Link to="/Modify">
+      <Link to="/Update">
         <button>최근 게시글 수정</button>
       </Link>
       <Link to="/Delete">
